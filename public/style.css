@@ -1,0 +1,56 @@
+
+table { 
+    border-collapse: collapse;
+}
+td {
+    border: 1px solid #ccc;
+    padding: 3px 5px;
+}
+
+#stat_tbl {
+    width: 100%;
+}
+#stat_tbl tr>td:first-child {
+    width: 35px;
+    text-align: center;
+}
+#stat_tbl tr>td:nth-child(2) {
+    width: 10px;
+    text-align: center;
+}
+
+.ico_add:before {
+    color: green;
+    content: '✚';
+}
+.ico_up:before {
+    color: green;
+    content: '▲';
+}
+.ico_down:before {
+    color: green;
+    content: '▼';
+}
+.ico_no:before {
+    color: black;
+    content: '●';
+}
+.hidden {
+    display: none;
+}
+
+#filter_container {
+    display: flex;
+    align-items: stretch;
+}
+
+.btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    flex: 1;
+    cursor: pointer;
+    text-align: center;
+}
+.btn:hover {
+    background-color: #dadada
+}
