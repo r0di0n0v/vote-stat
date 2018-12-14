@@ -34,7 +34,6 @@ const MAX_PAGE = process.env.MAX_PAGE || 60;
 
 const stat = {};
 
-// todo: async/await for-loop OR yeild
 loop()
     .then(() => {
         console.log('write stat.json');
@@ -43,9 +42,9 @@ loop()
     .then(renderHtmlPage)
     .then(putFilesToFtp);
 
-
 /**
  * Main function
+ * @returns {Promise<PromiseLike<T | never>>}
  */
 async function loop() {
     return httpsGet(`${url}${page}`)
@@ -66,9 +65,6 @@ async function loop() {
  */
 function renderHtmlPage() {
     console.log('render');
-    /**
-     * Рендер HTML
-     */
     const arr = [];
     Object.keys(stat).forEach((key) => {
         arr.push(stat[key]);
@@ -76,7 +72,7 @@ function renderHtmlPage() {
     arr.sort((a, b) => b.likes - a.likes);
     const category = {};
 
-    // Таблица со статистикой
+    // table w/ stat
     let tbl = '';
     arr.forEach((data, i) => {
         const ico = 'ico_no';
@@ -99,7 +95,7 @@ function renderHtmlPage() {
             `;
     });
 
-
+    // filters for table
     let filters = '<div class="btn" onclick="filterTable(-1)">Все</div>';
     /* eslint-disable */
     for (const cat in category) {
@@ -151,11 +147,10 @@ async function putFilesToFtp(fileNameArr) {
 
 /**
  * Calc stat from one page
+ * @param data
+ * @returns {boolean}
  */
 function calcStat(data) {
-    /**
-     * Сбор статистики
-     */
     const $ = cheerio.load(data);
     const tiles = $('.media-cell.hentry');
     for (let i = 0; i < tiles.length; i++) {
@@ -213,7 +208,6 @@ function httpsGet(url) {
 
 /**
  * Decode HTML string to UTF8 string
- * ! copied fragment
  * @param {string} str
  */
 function decode(str) {
